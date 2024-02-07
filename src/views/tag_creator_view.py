@@ -1,22 +1,18 @@
 from src.controllers.tag_creator_controller import TagCreatorController
 from src.views.http_types.http_request import HttpRequest
 from src.views.http_types.http_response import HttpResponse
-# from barcode import Code128
+
 
 class TagCreatorView:
 
   def validate_and_create(self,http_request: HttpRequest) -> HttpResponse:
-    tag_creator_controller = TagCreatorController()
-
     body = http_request.body
-    product_code = body.get('product_code')
+    product_code = body['product_code']
+    tag_type = 'barcode' # barcode
+    if 'tag_type' in body:
+      tag_type = body['tag_type'] # barcode or qrcode
 
-    # logica de regra de negocio
-    formatted_response = tag_creator_controller.create(product_code)
-    
-    # tag = Code128(product_code, writer=ImageWriter())
-    # path_from_tag = f'{tag}'
-    # tag.save(path_from_tag)
-    print('Estou na minha view')
-    # return path_from_tag
+    tag_creator_controller = TagCreatorController()
+    formatted_response = tag_creator_controller.create(product_code, tag_type)
+
     return HttpResponse(status_code=200, body=formatted_response)
