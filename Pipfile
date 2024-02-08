@@ -9,6 +9,8 @@ pre-commit = "*"
 flask = "*"
 python-barcode = "*"
 pillow = "*"
+cerberus = "*"
+pytest = "*"
 
 [dev-packages]
 
